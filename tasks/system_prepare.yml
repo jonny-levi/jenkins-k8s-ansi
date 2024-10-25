@@ -1,0 +1,27 @@
+- name: Helm - add jenkins repo
+  kubernetes.core.helm_repository:
+    name: jenkinsci
+    repo_url: https://charts.jenkins.io
+    force_update: true
+
+- name: Copy the jenkins files direcotry to tmp folder
+  ansible.builtin.copy:
+    src: ~/jenkins-k8s/jenkins-yamls/
+    dest: /tmp/jenkins-yamls/
+    owner: jonathan
+    group: jonathan
+    mode: '0755'
+
+- name: K8S - Apply Jenkins volume
+  ansible.builtin.shell: kubectl create namespace jenkins
+
+- name: K8S - Apply Jenkins volume
+  ansible.builtin.shell: kubectl apply -f /tmp/jenkins-yamls/jenkins-volume.yaml
+
+- name: K8S - Apply Jenkins Service Account
+  ansible.builtin.shell: kubectl apply -f /tmp/jenkins-yamls/jenkins-sa.yaml
+
+- name: K8S - Install Jenkins
+  ansible.builtin.shell: |
+    chart=jenkinsci/jenkins
+    helm install jenkins -n jenkins -f /tmp/jenkins-yamls/jenkins-values.yaml $chart
