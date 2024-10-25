@@ -25,3 +25,15 @@
   ansible.builtin.shell: |
     chart=jenkinsci/jenkins
     helm install jenkins -n jenkins -f /tmp/jenkins-yamls/jenkins-values.yaml $chart
+
+- name: K8S - Getting admin credentials
+  ansible.builtin.shell: | 
+    jsonpath="{.data.jenkins-admin-password}"
+    secret=$(kubectl get secret -n jenkins jenkins -o jsonpath=$jsonpath)
+    echo $(echo $secret | base64 --decode)
+  register: jenkins_admin_password
+
+- name: Print Jenkins admin password
+  ansible.builtin.debug:
+    msg: Jenkins admin password "{{ jenkins_admin_password.stdout }}"
+  
