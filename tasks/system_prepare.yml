@@ -6,7 +6,7 @@
 
 - name: Copy the jenkins files direcotry to tmp folder
   ansible.builtin.copy:
-    src: ~/jenkins-k8s/jenkins-yamls/
+    src: ~/jenkins-k8s-ansi/jenkins-yamls/
     dest: /tmp/jenkins-yamls/
     owner: jonathan
     group: jonathan
