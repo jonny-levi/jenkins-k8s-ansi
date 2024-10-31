@@ -21,7 +21,7 @@
 - name: K8S - Apply Jenkins Service Account
   ansible.builtin.shell: kubectl apply -f /tmp/jenkins-yamls/jenkins-sa.yaml
 
-- name: K8S - Install Jenkins
+- name: K8S - Updating Helm charts
   ansible.builtin.shell: |
     helm repo add jenkinsci https://charts.jenkins.io
     helm repo update
