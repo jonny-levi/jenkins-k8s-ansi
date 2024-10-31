@@ -23,6 +23,11 @@
 
 - name: K8S - Install Jenkins
   ansible.builtin.shell: |
+    helm repo add jenkinsci https://charts.jenkins.io
+    helm repo update
+
+- name: K8S - Install Jenkins
+  ansible.builtin.shell: |
     chart=jenkinsci/jenkins
     helm install jenkins -n jenkins -f /tmp/jenkins-yamls/jenkins-values.yaml $chart
 
