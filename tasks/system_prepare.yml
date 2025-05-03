@@ -23,7 +23,7 @@
 
 - name: K8S - Updating Helm charts
   ansible.builtin.shell: |
-    helm repo add jenkinsci https://charts.jenkins.io
+    helm repo add jenkins https://charts.jenkins.io
     helm repo update
 
 - name: K8S - Install Jenkins
